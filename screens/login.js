@@ -4,8 +4,9 @@ import {  StyleSheet, Text, TextInput, View} from 'react-native';
 import { Button } from '@rneui/themed';
 
 export default function Login({navigation}) {
-  return (
   
+  //console.log(name);
+  return (
     <View style={styles.appcontainer}>
     <Text style={styles.heading} >Bus Tracking</Text>
       <StatusBar barStyle = "dark-content" hidden={true} />
