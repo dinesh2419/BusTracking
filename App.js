@@ -12,6 +12,7 @@ const Stack=createNativeStackNavigator();
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
+import Bus_info2 from './screens/bus_info2';
 async function opendb()
 {
   if(!(await FileSystem.getInfoAsync(FileSystem.documentDirectory+"SQLite")).exists){
@@ -26,6 +27,10 @@ async function opendb()
 function App() {
   
 useEffect(()=>{
+  // const d=new Date();
+  // console.log(d);
+  // console.log(d.getHours());
+  // console.log(d.getMinutes());
   opendb().then(db=>
     db.transaction((tx)=>{
       tx.executeSql(
@@ -57,8 +62,12 @@ useEffect(()=>{
     component={Home}
     />
     <Stack.Screen
-      name="search_box"
+      name="bus_info"
       component={Cardinfo}
+    />
+    <Stack.Screen
+      name="bus_info2"
+      component={Bus_info2}
     />
     </Stack.Navigator>
   </NavigationContainer>

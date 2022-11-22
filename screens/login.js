@@ -10,8 +10,8 @@ export default function Login({navigation}) {
     <View style={styles.appcontainer}>
     <Text style={styles.heading} >Bus Tracking</Text>
       <StatusBar barStyle = "dark-content" hidden={true} />
-      <TextInput style={styles.inputboxstyle} placeholder='User Id'></TextInput>
-      <TextInput style={styles.inputboxstyle} hidden={true} placeholder='Password'></TextInput>
+      <TextInput style={styles.inputboxstyle} placeholder='Email'></TextInput>
+      <TextInput style={styles.inputboxstyle} secureTextEntry={true}  placeholder='Password'></TextInput>
       <Button title='login' containerStyle={styles.buttonstyle} onPress={()=>{
         navigation.replace('Home');
         //navigation.navigate('Home');

@@ -12,7 +12,7 @@ export default function UserResgistration({navigation}) {
       <TextInput style={styles.inputboxstyle} placeholder='name'></TextInput>
       <TextInput style={styles.inputboxstyle} placeholder='email'></TextInput>
       <TextInput style={styles.inputboxstyle} placeholder='phone number'></TextInput>
-      <TextInput style={styles.inputboxstyle} placeholder='User Id'></TextInput>
+      
       <TextInput style={styles.inputboxstyle} hidden={true} placeholder='Password'></TextInput>
       <Button title='submit' onPress={()=>{
             navigation.navigate('Login')
