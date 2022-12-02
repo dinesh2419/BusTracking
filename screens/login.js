@@ -1,19 +1,83 @@
 import { StatusBar } from 'expo-status-bar';
 import { Pressable } from 'react-native';
-import {  StyleSheet, Text, TextInput, View} from 'react-native';
+import {  StyleSheet, Text, TextInput, View,Alert} from 'react-native';
 import { Button } from '@rneui/themed';
+import { useState } from 'react';
+import * as SQLite from 'expo-sqlite';
+import * as FileSystem from 'expo-file-system';
+import { Asset } from 'expo-asset';
+async function opendb()
+{
+    if(!(await FileSystem.getInfoAsync(FileSystem.documentDirectory+"SQLite")).exists){
+      await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory+"SQLite");
+    }
+    await FileSystem.downloadAsync(
+      Asset.fromModule(require("../assets/database/sqlite.db")).uri,
+      FileSystem.documentDirectory+"SQLite/sqlite.db"
+    );
+    return SQLite.openDatabase("sqlite.db");
+}
 
 export default function Login({navigation}) {
   
+
   //console.log(name);
+  const [email,setemail]=useState('');
+  const [password,setpassword]=useState('');
+  const [error_statement,statementhandle]=useState('');
+ function loginhandle()
+ {
+  if(email=="" || password=="" )
+  {
+    //Alert.alert("all fields are required");
+    statementhandle("all fields are required")
+  }
+  else
+  {
+    checker();
+  }
+ }
+ async function checker()
+    {
+      let x=email.toLowerCase();
+    opendb().then(db=>
+      db.transaction((tx)=>{
+        tx.executeSql(
+          "SELECT * FROM user where email=? and password=?",
+          [email,password],
+          (tx,res)=>{
+            let len=res.rows.length;
+            if(len>0)
+            {
+              //navigation.navigate('Home');
+              navigation.replace('Home');
+            }
+            else{
+              //Alert.alert("incorrect username or password");
+              statementhandle("incorrect username or password")
+            }
+          },
+          error=>{
+            console.log("oops! there was an error "+error);
+          }
+        )
+      })) 
+    return true;
+    }
   return (
     <View style={styles.appcontainer}>
     <Text style={styles.heading} >Bus Tracking</Text>
-      <StatusBar barStyle = "dark-content" hidden={true} />
-      <TextInput style={styles.inputboxstyle} placeholder='Email'></TextInput>
-      <TextInput style={styles.inputboxstyle} secureTextEntry={true}  placeholder='Password'></TextInput>
+      <StatusBar barStyle = "dark-content" hidden={true}  />
+      <TextInput style={styles.inputboxstyle} placeholder='Email' onChangeText={(x)=>{
+        setemail(x)
+      }}></TextInput>
+      <TextInput style={styles.inputboxstyle} secureTextEntry={true}  placeholder='Password' onChangeText={(x)=>{
+        setpassword(x)
+      }}></TextInput>
+      <TextInput style={{color:"red" ,fontSize:25}}>{error_statement}</TextInput>
       <Button title='login' containerStyle={styles.buttonstyle} onPress={()=>{
-        navigation.replace('Home');
+        loginhandle()
+       // navigation.replace('Home');
         //navigation.navigate('Home');
         
       }}/>  

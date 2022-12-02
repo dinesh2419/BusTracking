@@ -5,6 +5,8 @@ import { DataTable } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
+import { WebView } from 'react-native-webview';
+
 async function opendb()
 {
     if(!(await FileSystem.getInfoAsync(FileSystem.documentDirectory+"SQLite")).exists){
@@ -19,6 +21,7 @@ async function opendb()
 export default function Bus_info2({route,navigation})
 {
     const {arr,serviceno}=route.params;
+
     let driver_details=[];
     async function driver_info()
     {
@@ -95,10 +98,10 @@ export default function Bus_info2({route,navigation})
         }
         else if(next>=time_hr.length)
         {
-            statement="The bus arrived at destination "+time1.get(time_hr[before]);
+            statement="The bus arrived at destination "+time1.get(time_hr[before]) +". it arrived destination exactly "+(d.getHours()-time_hr[before])+" hour(s) "+d.getMinutes()+" minute(s) back " ;
         }
         else{
-            statement= "The bus has left "+time1.get(time_hr[before])+" the bus will be arriving shortly at "+time1.get(time_hr[next]);
+            statement= "The bus has left "+time1.get(time_hr[before])+" the bus will be arriving shortly at "+time1.get(time_hr[next]) +" in"+ (time_hr[next]-d.getHours())+" hour(s) "+d.getMinutes()+" minute(s) ";
         }
 
         console.log(statement)
@@ -118,8 +121,65 @@ export default function Bus_info2({route,navigation})
     {
     driver_info();
     return (
-    <ScrollView style={styles.scrollView} >
-    {
+        <ScrollView>
+        {
+        <View style={styles.container}>
+        <Card containerStyle={{width:"100%"}}>
+            <Card.Title style={styles.textstyle1}>service number: {serviceno} </Card.Title>
+            <Card.Divider></Card.Divider>
+            { arr.map((x)=>{
+                return (
+                <View>
+                <DataTable>          
+                    <DataTable.Row >
+                        <DataTable.Cell >{x[0]}</DataTable.Cell>
+                        <DataTable.Cell></DataTable.Cell>
+                        <DataTable.Cell></DataTable.Cell>
+                        <DataTable.Cell>{x[1]}:{(x[2]>=10)?x[2]:"0"+x[2]}</DataTable.Cell>
+                    </DataTable.Row>
+                </DataTable>
+                </View>
+                )
+            })
+            }
+        <Text style={styles.textstyle1}>Driver Details:</Text>
+        <Text style={styles.textstyle}>Driver Id: {id}</Text>
+        <Text style={styles.textstyle}>Driver Name: {name}</Text>
+        <Text style={styles.textstyle}>Driver Phone number: {phno}</Text>
+        <Text style={styles.textstyle1}>current location:</Text>
+        <Text style={styles.textstyle}>{statement}</Text>
+        <Button title='live tracking' onPress={()=>{
+            navigation.navigate('map_info',{serviceid:serviceno})
+        }}/>
+        </Card>
+        </View>
+        }
+        </ScrollView>
+    );   
+    }}
+const styles=StyleSheet.create({
+    container:{
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    textstyle:{
+        fontSize:20,
+        
+    },
+    textstyle1:{
+        fontSize:20,
+        color:"red"
+    },
+    scrollView: {
+        
+        marginBottom:20,
+      },
+      datatable:{
+        backgroundColor:"pink"
+      }
+
+})
+ {/*
         <View style={styles.container}>
         <Card containerStyle={{width:"100%"}}>
             <Card.Title style={styles.textstyle1}>service number: {serviceno} </Card.Title>
@@ -148,31 +208,6 @@ export default function Bus_info2({route,navigation})
         
         </Card>
         </View>
-    }
-    </ScrollView>
-    
-    );   
-}   
-}
-const styles=StyleSheet.create({
-    container:{
-        alignItems:'center',
-        justifyContent:'center'
-    },
-    textstyle:{
-        fontSize:20,
         
-    },
-    textstyle1:{
-        fontSize:20,
-        color:"red"
-    },
-    scrollView: {
-        
-        marginBottom:20,
-      },
-      datatable:{
-        backgroundColor:"pink"
-      }
-
-})
+    */}
+   

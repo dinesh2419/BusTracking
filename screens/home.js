@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
+import { Pressable } from 'react-native';
 async function opendb()
   {
     if(!(await FileSystem.getInfoAsync(FileSystem.documentDirectory+"SQLite")).exists){
@@ -107,6 +108,11 @@ async function tracking()
       set_service_no(x)
       }}></TextInput> 
       <Button title='track' onPress={tracking} ></Button> 
+      <Pressable onPress={()=>{
+        navigation.navigate('Login')
+      }}>
+        <Text style={{color:"#0044ff",fontSize:25,marginTop:200}}>Log Out</Text>
+      </Pressable>
     </View>
   );
 }
