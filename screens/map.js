@@ -8,7 +8,7 @@ export default function Livemap({route,navigation})
   
 let arr=[
   'https://www.google.com/maps/@11.3163553,75.929602,15z/data=!3m1!4b1!4m5!7m4!1m2!1s117872037051904867442!2sChZxNklrRFVnQmNIeF9SZXRJandVNUxnEggHBe7Fr49wcA%3D%3D!2e2?hl=en',
-  'https://www.google.com/maps/@11.3163949,75.9294624,15z/data=!3m1!4b1!4m5!7m4!1m2!1s107432298005165221900!2sChZLdEtNNFJPLUk1S1cwRWdDMGxUU1lREggHBe7FPmipQw%3D%3D!2e2?hl=en',
+  'https://www.google.com/maps/@11.3163476,75.9280546,15z/data=!3m1!4b1!4m5!7m4!1m2!1s102770260202186875336!2sChY0dmRvSEVmMzllZzhXempEM3h0SDFREggHBe7XsriQ4g%3D%3D!2e2?hl=en',
   'https://www.google.com/maps/@11.3165176,75.9294832,15z/data=!3m1!4b1!4m5!7m4!1m2!1s105819994209315989434!2sChZ3MU8xQ2RUYWYwVmlkeC1wbzY4SGxnEggHBe7FoJZyRQ%3D%3D!2e2?hl=en'
 ];
 console.log(serviceid);

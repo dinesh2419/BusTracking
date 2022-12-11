@@ -101,7 +101,7 @@ export default function Bus_info2({route,navigation})
             statement="The bus arrived at destination "+time1.get(time_hr[before]) +". it arrived destination exactly "+(d.getHours()-time_hr[before])+" hour(s) "+d.getMinutes()+" minute(s) back " ;
         }
         else{
-            statement= "The bus has left "+time1.get(time_hr[before])+" the bus will be arriving shortly at "+time1.get(time_hr[next]) +" in"+ (time_hr[next]-d.getHours())+" hour(s) "+d.getMinutes()+" minute(s) ";
+            statement= "The bus has left "+time1.get(time_hr[before])+" the bus will be arriving shortly at "+time1.get(time_hr[next]) +" in "+ (time_hr[next]-d.getHours())+" hour(s) "+d.getMinutes()+" minute(s) ";
         }
 
         console.log(statement)

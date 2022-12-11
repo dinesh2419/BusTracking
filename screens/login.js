@@ -2,10 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import { Pressable } from 'react-native';
 import {  StyleSheet, Text, TextInput, View,Alert} from 'react-native';
 import { Button } from '@rneui/themed';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 async function opendb()
 {
     if(!(await FileSystem.getInfoAsync(FileSystem.documentDirectory+"SQLite")).exists){
@@ -20,11 +21,12 @@ async function opendb()
 
 export default function Login({navigation}) {
   
-
+ // AsyncStorage.removeItem("arr");
   //console.log(name);
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
   const [error_statement,statementhandle]=useState('');
+  //statementhandle("");
  function loginhandle()
  {
   if(email=="" || password=="" )
@@ -41,11 +43,11 @@ export default function Login({navigation}) {
     {
       let x=email.toLowerCase();
     opendb().then(db=>
-      db.transaction((tx)=>{
+      db.transaction( (tx)=>{
         tx.executeSql(
           "SELECT * FROM user where email=? and password=?",
           [email,password],
-          (tx,res)=>{
+          async (tx,res)=>{
             let len=res.rows.length;
             if(len>0)
             {
@@ -54,7 +56,24 @@ export default function Login({navigation}) {
             }
             else{
               //Alert.alert("incorrect username or password");
-              statementhandle("incorrect username or password")
+              let arr=await AsyncStorage.getItem('arr')
+              if(!arr)
+              {
+                
+              statementhandle("incorrect username or password");
+              }
+              else
+              {
+              let temp=JSON.parse(arr);
+              for(let i=0;i<temp.length;i++)
+              {
+                if(temp[i]["email"]==email && temp[i]["password"]==password)
+                {
+                  navigation.replace('Home');
+                }
+              }
+            } 
+              statementhandle("incorrect username or password");
             }
           },
           error=>{

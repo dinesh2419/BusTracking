@@ -82,7 +82,7 @@ async function tracking()
             }
             let arr=results;
             i++;
-            console.log(i+" "+arr+" hi");
+           // console.log(i+" "+arr+" hi");
             
             
             navigation.navigate('bus_info2',{arr:results,serviceno:servie_no});
@@ -111,7 +111,7 @@ async function tracking()
       <Pressable onPress={()=>{
         navigation.navigate('Login')
       }}>
-        <Text style={{color:"#0044ff",fontSize:25,marginTop:200}}>Log Out</Text>
+        <Text style={{color:"#0044ff",fontSize:25,marginTop:300}}>Log Out</Text>
       </Pressable>
     </View>
   );
